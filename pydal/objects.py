@@ -252,9 +252,11 @@ class Row(BasicStorage):
         else:
             return item
 
-
 def pickle_row(s):
-    return Row, (dict(s),)
+    return Row, ({k: s[k] for k in s if k not in ('update_record', 'delete_record')},)
+
+#def pickle_row(s):
+ #   return Row, (dict(s),)
 
 
 copyreg.pickle(Row, pickle_row)
